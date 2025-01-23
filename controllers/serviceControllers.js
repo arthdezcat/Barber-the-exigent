@@ -1,4 +1,6 @@
 const Service = require('../models/Service');
+const fs = require('fs');
+const path = require('path');
 
 // Obtener todos los servicios
 exports.getServices = async (req, res) => {
@@ -37,7 +39,28 @@ exports.addService = async (req, res) => {
 exports.deleteService = async (req, res) => {
   try {
     const { id } = req.params;
+
+    // Buscar el servicio para obtener la ruta de la imagen
+    const service = await Service.findById(id);
+    if (!service) {
+      req.flash('error', 'Servicio no encontrado.');
+      return res.redirect('/admin/services');
+    }
+
+    // Eliminar la imagen del sistema de archivos (si existe)
+    if (service.image) {
+      const imagePath = path.join(__dirname, '..', 'public', service.image);
+      fs.unlink(imagePath, (err) => {
+        if (err) {
+          console.error('Error al eliminar la imagen:', err);
+        }
+      });
+    }
+
+    // Eliminar el servicio de la base de datos
     await Service.findByIdAndDelete(id);
+
+    // Redirigir al panel de administración de servicios
     res.redirect('/admin/services');
   } catch (error) {
     console.error(error);

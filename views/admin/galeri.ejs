@@ -34,7 +34,7 @@
       <!-- Sección para Agregar a la Galería -->
       <section class="add-gallery">
         <h1>Agregar a la Galería</h1>
-        <form action="/admin/galeria/add" method="post" class="gallery-form">
+        <form action="/admin/galeria/add" method="post" enctype="multipart/form-data" class="gallery-form">
           <div class="form-group">
             <label for="title">Título:</label>
             <input type="text" id="title" name="title" required>
@@ -46,8 +46,8 @@
           </div>
 
           <div class="form-group">
-            <label for="image">URL de la Imagen:</label>
-            <input type="text" id="image" name="image" required>
+            <label for="image">Imagen:</label>
+            <input type="file" id="image" name="image" accept="image/*" required>
           </div>
 
           <button type="submit" class="submit-btn">Añadir a la Galería</button>

@@ -29,7 +29,7 @@ router.post('/services/add', upload.single('image'), serviceController.addServic
 router.post('/services/delete/:id', serviceController.deleteService);
 router.post('/contact/add', contactController.addContact);
 router.post('/contact/delete/:id', contactController.deleteContact);
-router.post('/galeria/add', galeriaController.addGaleria);
+router.post('/galeria/add', upload.single('image'), galeriaController.addGaleria);
 router.post('/galeria/delete/:id', galeriaController.deleteGaleria);
 
 module.exports = router;
